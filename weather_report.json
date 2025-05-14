@@ -1,0 +1,150 @@
+{
+  "name": "weather report",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        -500
+      ],
+      "id": "f97fe450-4e20-485d-9c66-d969d8fdfd1d",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -480,
+        -320
+      ],
+      "id": "c0b19ef9-37ef-4df9-92c7-c91df20a7665",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=sunrise,sunset,sunshine_duration,rain_sum,daylight_duration&hourly=temperature_2m&current=rain,temperature_2m,relative_humidity_2m,is_day,showers",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -240,
+        -500
+      ],
+      "id": "80d128b8-a5d8-4b8f-a786-49a1f1743bdc",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the weather data from the previous node (replace \"items[0].json\" if needed)\nconst weatherData = items[0].json;\n\n// Extract date string for today (assumes data is for 2025-05-14)\nconst targetDate = '2025-05-14';\n\n// Get time and temperature arrays\nconst times = weatherData.hourly.time;\nconst temperatures = weatherData.hourly.temperature_2m;\n\n// Filter temperatures for today only\nconst todayTemps = [];\n\nfor (let i = 0; i < times.length; i++) {\n  if (times[i].startsWith(targetDate)) {\n    todayTemps.push(temperatures[i]);\n  }\n}\n\n// Get high and low temperature for the day\nconst high = Math.max(...todayTemps);\nconst low = Math.min(...todayTemps);\n\n// Create output message\nconst message = `In India, the high today is ${high}°C, the low is ${low}°C.`;\n\n// Return message\nreturn [\n  {\n    json: {\n      message,\n      high,\n      low,\n      city: \"Chicago\"\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -60,
+        -400
+      ],
+      "id": "a4fb64f5-292b-4734-a29e-4b11ec7aba6f",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "sendTo": "harshithadhanpal07@gmail.com",
+        "subject": "hiii",
+        "emailType": "text",
+        "message": "={{ $json.message }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        160,
+        -400
+      ],
+      "id": "77d973fe-2528-4813-80ee-775506581859",
+      "name": "Gmail",
+      "webhookId": "d53808a2-3cc9-4b9d-9333-1c6a8ef55e68",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QxA4B6mQYnNEPTf1",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When clicking ‘Test workflow’": [
+      {
+        "json": {}
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e28ecb86-c958-4d49-a5c5-668d1922d2d0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "684666ae72e570c760ccba961546dfecb26af01e575c1f68705c8fbe4f7918a4"
+  },
+  "id": "on7h5TKgkI01pABR",
+  "tags": []
+}
