@@ -24,4 +24,32 @@ This is an automated [n8n](https://n8n.io) workflow that fetches weather data fr
 ## 📨 Email Output Format
 
 Example message sent:
+You will receive an email like this:
+
+ The high today is 21.8°C, the low is 10.8°C.
+
+---
+
+## 📦 How to Use
+
+1. **Download the file** `weather_report.json` from this repo.
+2. **Open your [n8n](https://n8n.io/) instance**.
+3. **Import the workflow:**
+   - Click the menu → “Import from File”
+   - Select `weather_report.json`
+4. **Connect your Gmail account** under Credentials.
+5. **Test the workflow** or activate scheduling.
+
+---
+
+## 🔗 API Used
+
+- [Open-Meteo Weather API](https://open-meteo.com/en/docs)
+
+---
+
+## 📄 License
+
+MIT License – Free to use, modify, and distribute.
+
 
