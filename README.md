@@ -6,11 +6,13 @@ This is an automated [n8n](https://n8n.io) workflow that fetches weather data fr
 
 ## 🖼️ Workflow Preview
 
-![Workflow Screenshot](https://github.com/Harshitha547/weather_report/blob/main/Screenshot%202025-05-14%20143332.png)
+![Screenshot 2025-05-14 151308](https://github.com/user-attachments/assets/bd8eb62c-9ce1-48e4-8c9c-838fccaee818)
+
 
 ---
 
 ## 🧩 Workflow Summary
+
 
 ### 🔧 Nodes Used
 
