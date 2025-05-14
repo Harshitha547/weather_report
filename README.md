@@ -6,7 +6,7 @@ This is an automated [n8n](https://n8n.io) workflow that fetches weather data fr
 
 ## 🖼️ Workflow Preview
 
-![Workflow Screenshot](https://github.com/Harshitha547/weather_report/blob/main/Screenshot%202025-05-14%20143332.png?raw=true)
+![Workflow Screenshot](https://github.com/Harshitha547/weather_report/blob/main/Screenshot%202025-05-14%20143332.png)
 
 ---
 
